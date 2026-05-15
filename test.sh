@@ -18,7 +18,7 @@ repo sync
 # Clone device tree
 git clone https://github.com/aoitsme/stardust_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
 git clone https://github.com/aoitsme/android_device_sony_aurora -b lineage-23.2 device/sony/aurora
-git clone https://github.com/aoitsme/android_device_sony_tama-common -b lineage-23.2 device/sony/tama-common
+git clone https://github.com/aoitsme/android_device_sony_tama-common -b crdroid-16.0 device/sony/tama-common
 git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 hardware/sony/SonyOpenTelephony
 git clone https://github.com/aoitsme/proprietary_vendor_sony_aurora -b lineage-23.2 vendor/sony/aurora
 git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 vendor/sony/tama-common
