@@ -2,6 +2,7 @@
 
 # WARNING: This will remove all local changes!
 rm -rf .repo/local_manifests
+rm -rf bionic
 rm -rf kernel/sony
 rm -rf device/sony
 rm -rf hardware/sony
@@ -14,6 +15,10 @@ repo init -u https://github.com/crdroidandroid/android.git -b 16.0 --git-lfs --n
 # Sync the repositories
 /opt/crave/resync.sh
 repo sync
+
+# Replace repository
+rm -rf bionic
+git clone https://github.com/aoitsme/android_bionic -b crdroid-16.0 bionic
 
 # Clone device tree
 git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
