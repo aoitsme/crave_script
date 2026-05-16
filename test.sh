@@ -16,10 +16,6 @@ repo init -u https://github.com/crdroidandroid/android.git -b 16.0 --git-lfs --n
 /opt/crave/resync.sh
 repo sync
 
-# Replace repository
-rm -rf bionic
-git clone https://github.com/aoitsme/android_bionic -b crdroid-16.0 bionic
-
 # Clone device tree
 git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
 git clone https://github.com/aoitsme/android_device_sony_aurora -b lineage-23.2 device/sony/aurora
@@ -33,4 +29,5 @@ git clone https://github.com/aoitsme/keys -b master vendor/lineage-priv
 . build/envsetup.sh
 
 # Build rom
+rm -rf out
 brunch aurora
