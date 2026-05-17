@@ -3,6 +3,7 @@
 # WARNING: This will remove all local changes!
 rm -rf .repo/local_manifests
 rm -rf bionic
+rm -rf frameworks/native
 rm -rf kernel/sony
 rm -rf device/sony
 rm -rf hardware/sony
@@ -16,9 +17,11 @@ repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs
 /opt/crave/resync.sh
 repo sync -c --force-sync --no-clone-bundle --no-tags
 
-# Replace bionic
+# Replace some repo
 rm -rf bionic
+rm -rf frameworks/native
 git clone https://github.com/aoitsme/android_bionic -b lunaris-16.2 bionic
+git clone https://github.com/aoitsme/android_frameworks_native -b lunaris-16.2 frameworks/native
 
 # Clone device tree
 git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
