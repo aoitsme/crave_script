@@ -170,7 +170,7 @@ start_build_process() {
     DURATION_FORMATTED=$(format_duration $DURATION)
 
     if [[ $BUILD_STATUS -eq 0 ]]; then
-        ZIP_FILE=out/target/product/*"$DEVICE_CODE"*.zip
+        ZIP_FILE=$(ls -t out/target/product/"$DEVICE_CODE"/*"$DEVICE_CODE"*.zip 2>/dev/null | head -n 1)
         UPLOAD_RESULT=$(upload_files "$ZIP_FILE")
 
         if [[ "$UPLOAD_RESULT" != "UPLOAD_FAILED" ]]; then
