@@ -170,12 +170,12 @@ start_build_process() {
     DURATION_FORMATTED=$(format_duration $DURATION)
 
     if [[ $BUILD_STATUS -eq 0 ]]; then
-        ZIP_FILE=$(find out/target/product/"$DEVICE_CODE" -name "*.zip" | head -n 1)
+        ZIP_FILE=out/target/product/*"$DEVICE_CODE"*.zip
         UPLOAD_RESULT=$(upload_files "$ZIP_FILE")
 
         if [[ "$UPLOAD_RESULT" != "UPLOAD_FAILED" ]]; then
             IFS='|' read -r FILENAME FILESIZE GOLINK <<< "$UPLOAD_RESULT"
-            final_msg=$'⚙️ <b>ROM Build Finished!</b>\n\n• <b>ROM:</b> '"$BUILD_TARGET"$'\n• <b>Android:</b> '"$ANDROID_VERSION"$'\n• <b>Device:</b> '"$DEVICE_CODE"$'\n• <b>File:</b> <a href="'"$GOLINK"'">'"$FILENAME"$'</a>\n• <b>Size:</b> '"$FILESIZE"$'\n• <b>Link:</b> '"$GOLINK"$'\n• <b>Finish Time:</b> '"$(date '+%Y-%m-%d %H:%M:%S %Z')"$'\n• <b>Duration:</b> '"$DURATION_FORMATTED"$'\n• <b>Status:</b> Success'
+            final_msg=$'⚙️ <b>ROM Build Finished!</b>\n\n• <b>ROM:</b> '"$BUILD_TARGET"$'\n• <b>Android:</b> '"$ANDROID_VERSION"$'\n• <b>Device:</b> '"$DEVICE_CODE"$'\n• <b>File:</b> '"$FILENAME"$'\n• <b>Size:</b> '"$FILESIZE"$'\n• <b>Link:</b> '"$GOLINK"$'\n• <b>Finish Time:</b> '"$(date '+%Y-%m-%d %H:%M:%S %Z')"$'\n• <b>Duration:</b> '"$DURATION_FORMATTED"$'\n• <b>Status:</b> Success'
         else
             final_msg=$'⚙️ <b>ROM Build Finished!</b>\n\n• <b>ROM:</b> '"$BUILD_TARGET"$'\n• <b>Android:</b> '"$ANDROID_VERSION"$'\n• <b>Device:</b> '"$DEVICE_CODE"$'\n• <b>Finish Time:</b> '"$(date '+%Y-%m-%d %H:%M:%S %Z')"$'\n• <b>Duration:</b> '"$DURATION_FORMATTED"$'\n• <b>Status:</b> Upload failed'
         fi
