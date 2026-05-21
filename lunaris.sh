@@ -160,8 +160,7 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
-    make installclean
-    m bacon
+    m bacon -j$(nproc --all)
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
