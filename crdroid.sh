@@ -146,6 +146,7 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
+    export TARGET_EXCLUDE_MATLOG=true
     brunch "$DEVICE_CODE"
 
     BUILD_STATUS=${PIPESTATUS[0]}
