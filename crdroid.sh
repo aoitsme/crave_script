@@ -21,7 +21,7 @@ send_telegram_msg() {
   local chat_id="$1"
   local message="$2"
 
-  echo -e "\n[$(date '+%Y-%m-%d %H:%M:%S')] Sending message to Telegram..."
+  echo "Sending message to Telegram..."
 
   curl -s -X POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage" \
     -d "chat_id=${chat_id}" \
@@ -42,19 +42,6 @@ send_telegram_file() {
   curl -s -X POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendDocument" \
     -F chat_id="${chat_id}" \
     -F document=@"${file_path}" > /dev/null
-}
-
-send_telegram() {
-  local chat_id="$1"
-  local message="$2"
-
-  echo -e "\n[$(date '+%Y-%m-%d %H:%M:%S')] Sending message to Telegram..."
-
-  curl -s -X POST "https://api.telegram.org/bot$TG_BOT_TOKEN/sendMessage" \
-    -d "chat_id=${chat_id}" \
-    --data-urlencode "text=${message}" \
-    -d "parse_mode=HTML" \
-    -d "disable_web_page_preview=true" &> /dev/null
 }
 
 format_duration() {
