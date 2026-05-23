@@ -150,9 +150,8 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    export TARGET_EXCLUDE_MATLOG=true
-    lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
-    m bacon -j$(nproc --all)
+    lunch infinity_"$DEVICE_CODE"-userdebug
+    m bacon
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
