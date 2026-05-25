@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="InfinityX"
+BUILD_TARGET="Lineage"
 ANDROID_VERSION="16"
 
 # Setup Timezone
@@ -115,7 +115,9 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
+    rm -rf kernel/configs
     rm -rf frameworks/native
+    rm -rf hardware/interfaces
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
@@ -123,25 +125,25 @@ start_build_process() {
     rm -rf vendor/lineage-priv
 
     echo "Initializing repo..."
-    repo init --no-repo-verify --git-lfs -u https://github.com/ProjectInfinity-X/manifest -b 16 -g default,-mips,-darwin,-notdefault
+    repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     fi
-    repo sync -c --no-clone-bundle --no-tags --optimized-fetch --prune --force-sync
+    repo sync
     
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf frameworks/native
     rm -rf hardware/interfaces
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/aoitsme/android_frameworks_native -b infinityx-16 frameworks/native
+    git clone https://github.com/aoitsme/android_frameworks_native -b lineage-23.2 frameworks/native
     git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b infinityx-16 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/android_device_sony_tama-common -b lineage-23.2 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 vendor/sony/"$DEVICE_CODE"
@@ -150,8 +152,7 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    lunch infinity_"$DEVICE_CODE"-userdebug
-    m bacon
+    brunch "$DEVICE_CODE"
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
