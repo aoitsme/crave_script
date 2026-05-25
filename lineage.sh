@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="Lineage"
+BUILD_TARGET="LineageOS"
 ANDROID_VERSION="16"
 
 # Setup Timezone
