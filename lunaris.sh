@@ -115,12 +115,15 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
-    rm -rf frameworks/native
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
     rm -rf vendor/sony
     rm -rf vendor/lineage-priv
+
+    echo "Set github account.."
+    git config --global user.name "aoitsme"
+    git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
     repo init -u https://github.com/Lunaris-AOSP/android -b 16.2 --git-lfs
@@ -131,10 +134,12 @@ start_build_process() {
     fi
     repo sync -c --force-sync --no-clone-bundle --no-tags
     
-    echo "Replacing some repository..."
-    rm -rf frameworks/native
-    git clone https://github.com/aoitsme/android_frameworks_native -b lunaris-16.2 frameworks/native
-    
+    echo "Patch frameroks_native..."
+    cd frameworks/native
+    wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
+    git am 001-temp-fix-camera.patch
+    cd -
+
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
     git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lunaris-16.2 device/sony/"$DEVICE_CODE"

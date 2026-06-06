@@ -116,13 +116,16 @@ start_build_process() {
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
     rm -rf kernel/configs
-    rm -rf frameworks/native
     rm -rf hardware/interfaces
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
     rm -rf vendor/sony
     rm -rf vendor/lineage-priv
+
+    echo "Set github account.."
+    git config --global user.name "aoitsme"
+    git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
     repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle
@@ -135,11 +138,15 @@ start_build_process() {
     
     echo "Replacing some repository..."
     rm -rf kernel/configs
-    rm -rf frameworks/native
     rm -rf hardware/interfaces
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/aoitsme/android_frameworks_native -b lineage-23.2 frameworks/native
     git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
+
+    echo "Patch frameroks_native..."
+    cd frameworks/native
+    wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
+    git am 001-temp-fix-camera.patch
+    cd -
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
