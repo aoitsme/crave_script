@@ -128,20 +128,18 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle
+    repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     fi
     repo sync
-    
-    echo "Replacing some repository..."
-    rm -rf kernel/configs
-    rm -rf hardware/interfaces
-    git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
 
+    echo "Fuck bpf..."
+    git clone https://github.com/techyminati/fuck-bpf
+    ./fuck-bpf/apply.sh --mb
+    
     echo "Patch frameroks_native..."
     cd frameworks/native
     wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
