@@ -115,8 +115,6 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
-    rm -rf kernel/configs
-    rm -rf hardware/interfaces
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
@@ -137,7 +135,7 @@ start_build_process() {
     repo sync
 
     echo "Fuck bpf..."
-    git clone https://github.com/techyminati/fuck-bpf
+    git clone https://github.com/aoitsme/fuck-bpf -b lineage-23.2
     ./fuck-bpf/apply.sh --mb
     
     echo "Patch frameroks_native..."
