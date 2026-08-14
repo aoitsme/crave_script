@@ -115,6 +115,8 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
+    rm -rf kernel/configs
+    rm -rf hardware/interfaces
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
@@ -134,9 +136,11 @@ start_build_process() {
     fi
     repo sync --force-sync
 
-    echo "Fuck bpf..."
-    git clone https://github.com/aoitsme/fuck-bpf -b sixteen-qpr2
-    ./fuck-bpf/apply.sh --mb
+    echo "Replacing some repository..."
+    rm -rf kernel/configs
+    rm -rf hardware/interfaces
+    git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
+    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
     
     echo "Patch frameroks_native..."
     cd frameworks/native
@@ -156,7 +160,8 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     export WITH_GMS=false
-    brunch "$DEVICE_CODE"
+    lunch halcyon_aurora-bp4a-userdebug
+    mka carthage
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
