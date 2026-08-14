@@ -126,16 +126,16 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --no-clone-bundle --depth=1
+    repo init -u repo init -u https://github.com/halcyonproject/manifest -b 16.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     fi
-    repo sync
+    repo sync --force-sync
 
     echo "Fuck bpf..."
-    git clone https://github.com/aoitsme/fuck-bpf -b lineage-23.2
+    git clone https://github.com/aoitsme/fuck-bpf -b sixteen-qpr2
     ./fuck-bpf/apply.sh --mb
     
     echo "Patch frameroks_native..."
