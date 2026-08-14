@@ -140,7 +140,7 @@ start_build_process() {
     rm -rf kernel/configs
     rm -rf hardware/interfaces
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
+    git clone https://github.com/aoitsme/hardware_interfaces -b 16.2 hardware/interfaces
     
     echo "Patch frameroks_native..."
     cd frameworks/native
