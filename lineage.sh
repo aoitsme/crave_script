@@ -117,6 +117,7 @@ start_build_process() {
     rm -rf .repo/local_manifests
     rm -rf kernel/configs
     rm -rf hardware/interfaces
+    rm -rf frameworks/native
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
@@ -139,14 +140,10 @@ start_build_process() {
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf hardware/interfaces
+    rm -rf frameworks/native
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
     git clone https://github.com/aoitsme/hardware_interfaces -b 16.2 hardware/interfaces
-    
-    echo "Patch frameroks_native..."
-    cd frameworks/native
-    wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
-    git am 001-temp-fix-camera.patch
-    cd -
+    git clone https://github.com/aoitsme/frameworks_native -b 16.2 frameworks/native
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
@@ -160,7 +157,7 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     export WITH_GMS=false
-    lunch halcyon_aurora-bp4a-userdebug
+    lunch halcyon_"$DEVICE_CODE"-bp4a-userdebug
     mka carthage
 
     BUILD_STATUS=${PIPESTATUS[0]}
