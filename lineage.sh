@@ -129,7 +129,7 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u repo init -u https://github.com/halcyonproject/manifest -b 16.2 --git-lfs --depth=1
+    repo init -u https://github.com/halcyonproject/manifest -b 16.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
