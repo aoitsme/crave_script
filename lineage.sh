@@ -129,13 +129,13 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs --depth=1
+    repo init -u https://github.com/The-Clover-Project/manifest.git -b 16-qpr2 --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     fi
-    repo sync
+    repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
 
     echo "Replacing some repository..."
     rm -rf kernel/configs
@@ -163,7 +163,7 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     lunch clover_"$DEVICE_CODE"-bp4a-userdebug
-    mka clover -j$(nproc --all)
+    mka clover
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
