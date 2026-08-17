@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="Derpfest"
+BUILD_TARGET="Clover"
 ANDROID_VERSION="16"
 
 # Setup Timezone
@@ -153,8 +153,8 @@ start_build_process() {
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b derp-16.2 device/sony/tama-common
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b clvr-16.2 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/android_device_sony_tama-common -b clvr-16.2 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 vendor/sony/tama-common
@@ -162,9 +162,8 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    export PRODUCT_NAME=derpfest_akari
-    lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
-    mka derp
+    lunch clover_"$DEVICE_CODE"-bp4a-userdebug
+    mka clover -j$(nproc --all)
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
