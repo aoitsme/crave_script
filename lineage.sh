@@ -162,9 +162,8 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    export WITH_GMS=true
-    lunch halcyon_"$DEVICE_CODE"-bp4a-userdebug
-    mka carthage
+    lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
+    mka derp
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
