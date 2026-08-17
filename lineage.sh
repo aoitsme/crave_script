@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="LineageOS"
+BUILD_TARGET="Derpfest"
 ANDROID_VERSION="16"
 
 # Setup Timezone
@@ -129,21 +129,25 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/halcyonproject/manifest -b 16.2 --git-lfs --depth=1
+    repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     fi
-    repo sync --force-sync
+    repo sync
 
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf hardware/interfaces
-    rm -rf frameworks/native
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/aoitsme/hardware_interfaces -b 16.2 hardware/interfaces
-    git clone https://github.com/aoitsme/frameworks_native -b 16.2 frameworks/native
+    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
+
+    echo "Patch frameroks_native..."
+    cd frameworks/native
+    wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
+    git am 001-temp-fix-camera.patch
+    cd -
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
