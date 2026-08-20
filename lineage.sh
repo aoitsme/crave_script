@@ -134,14 +134,15 @@ start_build_process() {
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
+    else
+      repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
     fi
-    repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
 
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf hardware/interfaces
-    git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 kernel/configs
-    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 hardware/interfaces
+    git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 --depth=1 kernel/configs
+    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 --depth=1 hardware/interfaces
 
     echo "Patch frameroks_native..."
     cd frameworks/native
@@ -152,13 +153,13 @@ start_build_process() {
     cd -
     
     echo "Cloning device trees..."
-    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b clvr-16.2 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b clvr-16.2 device/sony/tama-common
-    git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 hardware/sony/SonyOpenTelephony
-    git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 vendor/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 vendor/sony/tama-common
-    git clone https://github.com/aoitsme/keys -b master vendor/lineage-priv
+    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b clvr-16.2 --depth=1 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/android_device_sony_tama-common -b clvr-16.2 --depth=1 device/sony/tama-common
+    git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
+    git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 --depth=1 vendor/sony/tama-common
+    git clone https://github.com/aoitsme/keys -b master --depth=1 vendor/lineage-priv
     
     echo "Starting ROM build..."
     . build/envsetup.sh
