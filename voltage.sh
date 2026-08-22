@@ -129,13 +129,13 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/The-Clover-Project/manifest.git -b 16-qpr2 --git-lfs --depth=1
+    repo init -u https://github.com/VoltageOS/manifest.git -b 16.2 --git-lfs --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
     else
-      repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
+      repo sync
     fi
 
     echo "Replacing some repository..."
@@ -154,8 +154,8 @@ start_build_process() {
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b clvr-16.2 --depth=1 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b clvr-16.2 --depth=1 device/sony/tama-common
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/android_device_sony_tama-common -b lineage-23.2-prvt --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 --depth=1 vendor/sony/tama-common
@@ -163,8 +163,7 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    lunch clover_"$DEVICE_CODE"-bp4a-userdebug
-    mka clover
+    brunch "$DEVICE_CODE"
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
