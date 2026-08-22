@@ -154,8 +154,8 @@ start_build_process() {
     
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b lineage-23.2-prvt --depth=1 device/sony/tama-common
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b volt-16.2 --depth=1 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoitsme/android_device_sony_tama-common -b volt-16.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 --depth=1 vendor/sony/tama-common
