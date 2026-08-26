@@ -169,6 +169,10 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
+    export TARGET_FACE_UNLOCK_SUPPORTED=true
+    export TARGET_INCLUDE_ACCORD=false
+    export TARGET_SUPPORTS_QUICK_TAP=true
+    lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
     mka derp
 
     BUILD_STATUS=${PIPESTATUS[0]}
