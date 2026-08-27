@@ -115,6 +115,7 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
+    rm -rf frameworks/native
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
@@ -137,17 +138,19 @@ start_build_process() {
     echo "Patch frameroks_native..."
     cd frameworks/native
     wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
+    wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/002-temp-fix-camera.patch
     git am 001-temp-fix-camera.patch
+    git am 002-temp-fix-camera.patch
     cd -
 
     echo "Cloning device trees..."
-    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf kernel/sony/sdm845
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b erofs kernel/sony/sdm845
     git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b crdroid-16 device/sony/tama-common
+    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2-dcm device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 vendor/sony/tama-common
-    git clone https://github.com/aoitsme/keys -b master vendor/lineage-priv
+    git clone https://github.com/aoi-itsme/keys -b new vendor/lineage-priv
     
     echo "Starting ROM build..."
     . build/envsetup.sh
