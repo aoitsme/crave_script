@@ -135,7 +135,7 @@ start_build_process() {
     echo "Syncing sources..."
     repo sync -j1 --fail-fast
     /opt/crave/resync.sh
-    repo sync
+    repo sync -j2
 
     echo "Replacing some repository..."
     rm -rf kernel/configs
