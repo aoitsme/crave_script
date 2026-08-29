@@ -133,7 +133,11 @@ start_build_process() {
     repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
-    /opt/crave/resync.sh
+    if [ -f /opt/crave/resync.sh ]; then
+      /opt/crave/resync.sh
+    else
+      repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
+    fi
     
     echo "Replacing some repository..."
     rm -rf kernel/configs
