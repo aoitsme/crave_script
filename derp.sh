@@ -133,10 +133,8 @@ start_build_process() {
     repo init -u https://github.com/DerpFest-AOSP/android_manifest.git -b 16.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
-    repo sync -j1 --fail-fast
     /opt/crave/resync.sh
-    repo sync -j2
-
+    
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf hardware/interfaces
@@ -151,12 +149,8 @@ start_build_process() {
     git am 002-temp-fix-camera.patch
     cd -
 
-    echo "Clone custom repo..."
-    rm -rf vendor/lineage
-    git clone https://github.com/aoi-itsme/android_vendor_derpfest -b 16.2 --depth=1 vendor/lineage
-    
     echo "Cloning device trees..."
-    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
     git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b derp-16.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
