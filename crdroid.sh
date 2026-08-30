@@ -155,6 +155,8 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     export TARGET_EXCLUDE_MATLOG=true
+    lunch lineage_aurora-bp4a-userdebug
+    m installclean
     brunch "$DEVICE_CODE"
 
     BUILD_STATUS=${PIPESTATUS[0]}
