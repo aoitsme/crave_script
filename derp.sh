@@ -167,6 +167,7 @@ start_build_process() {
     export TARGET_INCLUDE_ACCORD=true
     export TARGET_SUPPORTS_QUICK_TAP=true
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
+    mka installclean
     mka derp
 
     BUILD_STATUS=${PIPESTATUS[0]}
