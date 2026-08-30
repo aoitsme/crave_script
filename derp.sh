@@ -122,7 +122,6 @@ start_build_process() {
     rm -rf device/sony
     rm -rf hardware/sony
     rm -rf vendor/sony
-    rm -rf vendor/lineage
     rm -rf vendor/lineage-priv
 
     echo "Set github account.."
@@ -154,7 +153,7 @@ start_build_process() {
     cd -
 
     echo "Cloning device trees..."
-    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b erofs --depth=1 kernel/sony/sdm845
     git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b derp-16.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
@@ -165,7 +164,7 @@ start_build_process() {
     echo "Starting ROM build..."
     . build/envsetup.sh
     export TARGET_FACE_UNLOCK_SUPPORTED=true
-    export TARGET_INCLUDE_ACCORD=false
+    export TARGET_INCLUDE_ACCORD=true
     export TARGET_SUPPORTS_QUICK_TAP=true
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
     mka derp
