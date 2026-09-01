@@ -154,8 +154,12 @@ start_build_process() {
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    export TARGET_EXCLUDE_MATLOG=true
     brunch "$DEVICE_CODE"
+
+    echo "Generate super_empty..."
+    rm -rf device/sony/tama-common
+    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2-dcm-spr --depth=1 device/sony/tama-common
+    m superimage_empty
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
