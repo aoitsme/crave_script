@@ -157,6 +157,7 @@ start_build_process() {
     export WITH_GMS=false
     export TARGET_INCLUDE_ACCORD=false
     export TARGET_INCLUDE_VIPERFX=true
+    export USE_REALITY_ENGINE=true
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
     m installclean
     m evolution
