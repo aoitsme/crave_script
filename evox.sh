@@ -158,6 +158,7 @@ start_build_process() {
     export TARGET_INCLUDE_ACCORD=false
     export TARGET_INCLUDE_VIPERFX=false
     export TARGET_ENABLE_FP_OVERRIDE=false
+    export PERF_ANIM_OVERRIDE=true
     export USE_REALITY_ENGINE=true
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
     m installclean
