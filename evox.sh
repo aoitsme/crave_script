@@ -145,7 +145,7 @@ start_build_process() {
 
     echo "Cloning device trees..."
     git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoi-itsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
@@ -157,6 +157,7 @@ start_build_process() {
     export WITH_GMS=false
     export TARGET_INCLUDE_ACCORD=false
     export TARGET_INCLUDE_VIPERFX=false
+    export TARGET_ENABLE_FP_OVERRIDE=false
     export USE_REALITY_ENGINE=true
     lunch lineage_"$DEVICE_CODE"-bp4a-userdebug
     m installclean
