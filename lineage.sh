@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="CloverProject"
+BUILD_TARGET="LineageOS"
 ANDROID_VERSION="16"
 
 # Setup Timezone
@@ -129,21 +129,20 @@ start_build_process() {
     git config --global user.email "aoitsme01@gmail.com"
 
     echo "Initializing repo..."
-    repo init -u https://github.com/The-Clover-Project/manifest.git -b 16-qpr2 --git-lfs --depth=1
+    repo init -u https://github.com/LineageOS/android.git -b lineage-23.2 --git-lfs --depth=1
 
     echo "Syncing sources..."
     if [ -f /opt/crave/resync.sh ]; then
       /opt/crave/resync.sh
-    else
-      repo sync -c --force-sync --optimized-fetch --no-tags --no-clone-bundle --prune
     fi
+    repo sync
 
     echo "Replacing some repository..."
     rm -rf kernel/configs
     rm -rf hardware/interfaces
     git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 --depth=1 kernel/configs
     git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 --depth=1 hardware/interfaces
-
+    
     echo "Patch frameroks_native..."
     cd frameworks/native
     wget https://raw.githubusercontent.com/aoitsme/crave_script/refs/heads/main/patch/001-temp-fix-camera.patch
@@ -151,20 +150,24 @@ start_build_process() {
     git am 001-temp-fix-camera.patch
     git am 002-temp-fix-camera.patch
     cd -
-    
+
     echo "Cloning device trees..."
-    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
-    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b clvr-16.2 --depth=1 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoitsme/android_device_sony_tama-common -b clvr-16.2 --depth=1 device/sony/tama-common
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b erofs --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoitsme/android_device_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 device/sony/"$DEVICE_CODE"
+    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2-sdcm --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 --depth=1 vendor/sony/tama-common
-    git clone https://github.com/aoitsme/keys -b master --depth=1 vendor/lineage-priv
+    git clone https://github.com/aoi-itsme/keys -b new --depth=1 vendor/lineage-priv
     
     echo "Starting ROM build..."
     . build/envsetup.sh
-    lunch clover_"$DEVICE_CODE"-bp4a-userdebug
-    mka clover
+    brunch "$DEVICE_CODE"
+
+    echo "Generate super_empty..."
+    rm -rf device/sony/tama-common
+    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2-sdcmgen --depth=1 device/sony/tama-common
+    m superimage_empty
 
     BUILD_STATUS=${PIPESTATUS[0]}
 
