@@ -122,6 +122,7 @@ start_build_process() {
     rm -rf device/sony
     rm -rf hardware/sony
     rm -rf vendor/sony
+    rm -rf vendor/lineage
     rm -rf vendor/lineage-priv
 
     echo "Set github account.."
