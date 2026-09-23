@@ -7,7 +7,7 @@
 TG_BOT_TOKEN=$(echo "ODE1MzkzMzk3NjpBQUduZHRpdE5CZUJja2Uyc2pLa0g1R1JWMjdyWVNzRTF6OA==" | base64 -d)
 TG_CHAT_ID=$(echo "LTEwMDI0NzY1OTcwNTY=" | base64 -d)
 DEVICE_CODE="unknown"
-BUILD_TARGET="InfiinityX"
+BUILD_TARGET="InfinityX"
 ANDROID_VERSION="16"
 
 # Setup Timezone
@@ -152,7 +152,7 @@ start_build_process() {
     cd -
 
     echo "Cloning device trees..."
-    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoitsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
     git clone https://github.com/aoi-itsme/android_device_sony_"$DEVICE_CODE" -b infinityx-16.2 --depth=1 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b lineage-23.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
