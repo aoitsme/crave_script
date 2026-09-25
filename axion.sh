@@ -141,7 +141,7 @@ start_build_process() {
     rm -rf axion_sdk
     rm -rf hardware/interfaces
     git clone https://github.com/aoitsme/android_axion_sdk -b lineage-23.2 --depth=1 axion_sdk
-    git clone https://github.com/aoitsme/axion_hardware_interfaces lineage-23.2 --depth=1 hardware/interfaces
+    git clone https://github.com/aoitsme/axion_hardware_interfaces -b lineage-23.2 --depth=1 hardware/interfaces
     
     echo "Patch frameroks_native..."
     cd frameworks/native
