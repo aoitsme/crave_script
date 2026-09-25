@@ -116,7 +116,6 @@ start_build_process() {
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
     rm -rf axion_sdk
-    rm -rf kernel/configs
     rm -rf hardware/interfaces
     rm -rf frameworks/native
     rm -rf kernel/sony
@@ -140,11 +139,9 @@ start_build_process() {
 
     echo "Replacing some repository..."
     rm -rf axion_sdk
-    rm -rf kernel/configs
     rm -rf hardware/interfaces
     git clone https://github.com/aoitsme/android_axion_sdk -b lineage-23.2 --depth=1 axion_sdk
-    git clone https://github.com/crdroidandroid/android_kernel_configs -b 16.0 --depth=1 kernel/configs
-    git clone https://github.com/crdroidandroid/android_hardware_interfaces -b 16.0 --depth=1 hardware/interfaces
+    git clone https://github.com/aoitsme/axion_hardware_interfaces lineage-23.2 --depth=1 hardware/interfaces
     
     echo "Patch frameroks_native..."
     cd frameworks/native
