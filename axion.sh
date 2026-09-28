@@ -140,11 +140,9 @@ start_build_process() {
     repo sync
 
     echo "Replacing some repository..."
-    rm -rf axion_sdk
     rm -rf device/axion/common
     rm -rf hardware/interfaces
     rm -rf kernel/configs
-    git clone https://github.com/aoitsme/android_axion_sdk -b lineage-23.2 --depth=1 axion_sdk
     git clone https://github.com/aoitsme/android_device_axion_common -b lineage-23.2 --depth=1 device/axion/common
     git clone https://github.com/aoitsme/axion_hardware_interfaces -b lineage-23.2 --depth=1 hardware/interfaces
     git clone https://github.com/aoi-itsme/android_kernel_configs -b lineage-23.2 --depth=1 kernel/configs
