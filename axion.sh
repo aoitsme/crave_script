@@ -115,7 +115,6 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
-    rm -rf axion_sdk
     rm -rf device/axion/common
     rm -rf hardware/interfaces
     rm -rf frameworks/native
@@ -156,7 +155,7 @@ start_build_process() {
     cd -
 
     echo "Cloning device trees..."
-    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b bpf --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b stardust-uclamp --depth=1 kernel/sony/sdm845
     git clone https://github.com/aoi-itsme/android_device_sony_"$DEVICE_CODE" -b axion-23.2 --depth=1 device/sony/"$DEVICE_CODE"
     git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b axion-23.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
