@@ -139,12 +139,8 @@ start_build_process() {
     repo sync
 
     echo "Replacing some repository..."
-    rm -rf device/axion/common
     rm -rf hardware/interfaces
-    rm -rf kernel/configs
-    git clone https://github.com/aoitsme/android_device_axion_common -b lineage-23.2 --depth=1 device/axion/common
     git clone https://github.com/aoitsme/axion_hardware_interfaces -b lineage-23.2 --depth=1 hardware/interfaces
-    git clone https://github.com/aoi-itsme/android_kernel_configs -b lineage-23.2 --depth=1 kernel/configs
     
     echo "Patch frameroks_native..."
     cd frameworks/native
@@ -155,9 +151,9 @@ start_build_process() {
     cd -
 
     echo "Cloning device trees..."
-    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b stardust-uclamp-retrofit --depth=1 kernel/sony/sdm845
+    git clone https://github.com/aoi-itsme/android_kernel_sony_sdm845 -b retrofit --depth=1 kernel/sony/sdm845
     git clone https://github.com/aoi-itsme/android_device_sony_"$DEVICE_CODE" -b axion-23.2 --depth=1 device/sony/"$DEVICE_CODE"
-    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b axion-23.2-priv --depth=1 device/sony/tama-common
+    git clone https://github.com/aoi-itsme/android_device_sony_tama-common -b axion-23.2 --depth=1 device/sony/tama-common
     git clone https://github.com/aoitsme/android_hardware_sony_SonyOpenTelephony -b lineage-23.2 --depth=1 hardware/sony/SonyOpenTelephony
     git clone https://github.com/aoitsme/proprietary_vendor_sony_"$DEVICE_CODE" -b lineage-23.2 --depth=1 vendor/sony/"$DEVICE_CODE"
     git clone https://github.com/aoitsme/proprietary_vendor_sony_tama-common -b lineage-23.2 --depth=1 vendor/sony/tama-common
