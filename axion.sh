@@ -115,10 +115,8 @@ start_build_process() {
     
     echo "Removing local changes..."
     rm -rf .repo/local_manifests
-    rm -rf device/axion/common
     rm -rf hardware/interfaces
     rm -rf frameworks/native
-    rm -rf kernel/configs
     rm -rf kernel/sony
     rm -rf device/sony
     rm -rf hardware/sony
